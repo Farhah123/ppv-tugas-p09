@@ -48,3 +48,12 @@ Pengujian dilakukan dengan mencoba menandai jam kosong dan mencari waktu cocok, 
 - **3 tampilan** dengan navigasi langkah: 1. Anggota, 2. Jadwal, 3. Hasil. Menu aktif ditandai, dan tiap tampilan punya tombol Lanjut/Kembali.
 - **Media:** gambar `ilustrasi.svg` (ada `alt`, dihapus otomatis bila gagal dimuat) dan audio `ding.wav` (tombol nyala/mati, dimatikan sopan bila gagal dimuat).
 - **Animasi (`element.animate()`):** pindah tampilan (250 ms) dan kolom nama bergetar saat isian salah (300 ms). Durasi 0 bila pengguna meminta gerak dikurangi.
+- Pengembangan Tugas 4 dibantu Claude (Anthropic); kode sudah saya jalankan dan periksa sendiri.
+
+## Tugas P09 - Pustaka UI (Bootstrap 5.3.3)
+
+- **Pustaka:** Bootstrap 5.3.3 dari CDN jsDelivr, versi terkunci (tanpa `@latest`). `style.css` dimuat sesudah CSS Bootstrap.
+- **Komponen yang dipakai:** Toast (pesan singkat dan tombol Urungkan), Modal (konfirmasi "Mulai dari awal"), Offcanvas (panel pintasan keyboard).
+- **Tema:** diubah lewat variabel CSS Bootstrap (`--bs-toast-bg`, `--bs-modal-bg`, `--bs-offcanvas-bg`, dan lainnya) di bagian 9 `style.css`.
+- **Pembungkus:** semua panggilan API JavaScript Bootstrap hanya ada di `ui-pustaka.js`; `script.js` memakai `UI.toast()`, `UI.konfirmasi()`, dan `UI.bukaPintasan()`.
+- **Penyesuaian:** kelas `.tooltip` buatan sendiri diganti `.tip-kotak` karena bentrok dengan `.tooltip` milik Bootstrap. Toast buatan sendiri diganti Bootstrap Toast.

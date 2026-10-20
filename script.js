@@ -94,10 +94,7 @@ const el = {
   btnReset: document.getElementById('btnReset'),
   catatanBasi: document.getElementById('catatanBasi'),
   hasil: document.getElementById('hasil'),
-  tooltip: document.getElementById('tooltip'),
-  toast: document.getElementById('toast'),
-  toastTeks: document.getElementById('toastTeks'),
-  toastAksi: document.getElementById('toastAksi')
+  tooltip: document.getElementById('tooltip')
 };
 
 const kunci = (hari, jam) => `${hari}-${jam}`;
@@ -683,29 +680,10 @@ function sembunyikanTooltip() {
   el.tooltip.hidden = true;
 }
 
-let waktuToast = null;
-let aksiToast = null;
-
+// Toast sekarang ditangani komponen Bootstrap lewat pembungkus ui-pustaka.js
 function tampilkanToast(teks, labelAksi, aksi) {
-  clearTimeout(waktuToast);
-  el.toastTeks.textContent = teks;
-  aksiToast = aksi || null;
-  el.toastAksi.hidden = !aksi;
-  if (aksi) el.toastAksi.textContent = labelAksi;
-  el.toast.hidden = false;
-  waktuToast = setTimeout(sembunyikanToast, aksi ? 7000 : 3500);
+  UI.toast(teks, labelAksi, aksi);
 }
-
-function sembunyikanToast() {
-  el.toast.hidden = true;
-  aksiToast = null;
-}
-
-el.toastAksi.addEventListener('click', () => {
-  const aksi = aksiToast;
-  sembunyikanToast();
-  if (aksi) aksi();
-});
 
 window.addEventListener('scroll', sembunyikanTooltip, { passive: true });
 
@@ -759,16 +737,30 @@ el.btnReset.addEventListener('click', () => {
     tampilkanToast('Belum ada data yang perlu dihapus.');
     return;
   }
-  const cadangan = JSON.stringify(state);
-  state = buatStateAwal();
-  simpan();
-  renderSemua();
-  resetHasil();
-  tampilkanToast('Semua data dihapus.', 'Urungkan', () => pulihkan(cadangan));
+  // Modal Bootstrap (lewat pembungkus): minta konfirmasi dulu
+  UI.konfirmasi({
+    judul: 'Mulai dari awal?',
+    isi: 'Semua anggota dan jam kosong yang sudah ditandai akan dihapus. Setelah ini kamu masih bisa mengurungkannya sebentar.',
+    labelYa: 'Ya, hapus semua'
+  }).then(ya => {
+    if (!ya) return;
+    const cadangan = JSON.stringify(state);
+    state = buatStateAwal();
+    simpan();
+    renderSemua();
+    resetHasil();
+    tampilkanToast('Semua data dihapus.', 'Urungkan', () => pulihkan(cadangan));
+  });
 });
+
+// Offcanvas Bootstrap (lewat pembungkus): panel pintasan keyboard
+document.getElementById('btnPintasan').addEventListener('click', () => UI.bukaPintasan());
 
 // EVENT keydown: pintasan keyboard di seluruh halaman
 document.addEventListener('keydown', e => {
+  // Saat modal atau panel samping terbuka, pintasan halaman dimatikan
+  if (document.querySelector('.modal.show, .offcanvas.show')) return;
+
   // Ctrl + Enter: cari waktu cocok
   if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
     e.preventDefault();
