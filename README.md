@@ -1,7 +1,7 @@
 ﻿# Tugas P09 - Pasang Pustaka UI Tanpa Drama
 
 Praktikum Pemrograman Visual (TB033109)
-Nama: Farhah Athallah Tsabitah | NRP: 5125500047 | Kelas: 2  D3 MM B
+Nama: Farhah Athallah Tsabitah | NRP: 5125500047 | Kelas: 2  D3 MMB B
 
 ## Isi repositori
 
