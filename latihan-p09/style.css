@@ -1,0 +1,31 @@
+/* style.css — tema Katalog Karya di atas Bootstrap 5.3.
+   Tema diubah lewat variabel CSS yang disediakan Bootstrap, bukan menimpa aturan internalnya. */
+:root {
+  --merek: #1f3b63;
+  --merek-gelap: #16304f;
+  --aksen: #2f7de1;
+}
+[data-bs-theme="dark"] {
+  --merek: #8fb4ff;
+  --merek-gelap: #6f9ef5;
+}
+ 
+.navbar-brand {
+  --bs-navbar-brand-color: var(--merek);
+  --bs-navbar-brand-hover-color: var(--merek-gelap);
+  font-weight: 700;
+}
+ 
+.btn-primary {
+  --bs-btn-bg: var(--merek);
+  --bs-btn-border-color: var(--merek);
+  --bs-btn-hover-bg: var(--merek-gelap);
+  --bs-btn-hover-border-color: var(--merek-gelap);
+  --bs-btn-color: #ffffff;
+}
+[data-bs-theme="dark"] .btn-primary { --bs-btn-color: #10223a; --bs-btn-hover-color: #10223a; }
+ 
+.badge-kategori {
+  background-color: var(--aksen);
+  color: #ffffff;
+}
